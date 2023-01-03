@@ -1,0 +1,74 @@
+window: 
+  dimensions:
+    columns: 150
+    lines: 60
+  padding:
+# Отступы от самой рамки терминала по x,y. У меня отступов нет.
+    x: 3 
+    y: 3
+  dynamic_padding: false
+# Под декорациями имеется ввиду вид окна (transparent сделает края невидимыми)
+  decorations: none 
+  startup_mode: Maximized # Windowed - оконный, Maximized - оконный на весь экран, Fullscreen - на весь экран
+background_opacity: 0.95
+cursor:
+  # Cursor style
+  style:
+    # Cursor shape
+    #   - ▇ Block
+    #   - _ Underline
+    #   - | Beam
+    shape: Underline
+    blinking: Off
+  # Vi mode cursor style
+  #vi_mode_style: None
+  unfocused_hollow: true
+  thickness: 0.15
+
+# # # # # # # # # # # # # # # # # #    Прокрутка    # # # # # # # # # # # # # # # # # #
+scrolling:
+          history: 10000
+          multiplier: 3 # Сколько строк пропускается за один сдвиг колёсика мыши
+          faux_multiplier: 3
+          auto_scroll: true # При появлении новой строки в терминале, он прокручивается вниз
+#####################    Настройка шрифтов    #####################
+font:
+  normal:
+#    family: "GoMono Nerd Font"
+#    family: "FiraCode Nerd Font"
+#    style: "Retina"
+    family: "UbuntuMono Nerd Font"
+  size: 13.0 # Размер шрифта
+    # Печатать жирный текст яркими шрифтами
+    #draw_bold_text_with_bright_colors: true
+#shell:
+#  program: /usr/bin/zsh
+#  args:
+#    - --login
+###########################    Темы    ##########################
+# Темы были взяты отсюда https://github.com/eendroroy/alacritty-theme# 
+# Colors (Gruvbox Material Dark Medium)
+colors:
+  primary:
+    background: '0x282828'
+    foreground: '0xdfbf8e'
+
+  normal:
+    black:   '0x665c54'
+    red:     '0xea6962'
+    green:   '0xa9b665'
+    yellow:  '0xe78a4e'
+    blue:    '0x7daea3'
+    magenta: '0xd3869b'
+    cyan:    '0x89b482'
+    white:   '0xdfbf8e'
+
+  bright:
+    black:   '0x928374'
+    red:     '0xea6962'
+    green:   '0xa9b665'
+    yellow:  '0xe3a84e'
+    blue:    '0x7daea3'
+    magenta: '0xd3869b'
+    cyan:    '0x89b482'
+    white:   '0xdfbf8e'

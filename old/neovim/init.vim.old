@@ -1,0 +1,116 @@
+"	     _   _ _____ _____     _____ __  __ 
+"	    | \ | | ____/ _ \ \   / /_ _|  \/  |
+"	   |  \| |  _|| | | \ \ / / | || |\/| |
+"	  | |\  | |__| |_| |\ V /  | || |  | |
+"	 |_| \_|_____\___/  \_/  |___|_|  |_|
+"
+"
+"	     ________                    ___   __  
+"	   (_) | /  \                  /   \ /  \ 
+"	      ||    | , _|_  _   ,_     __/|    |
+"	   _ ||    |/ \_|  |/  /  |      \|    |
+"	 (_/  \__/  \/ |_/|__/   |_/\___/ \__/
+"
+"
+filetype plugin indent on "Включает определение типа файла, загрузку соответствующих ему плагинов и файлов отступов
+set encoding=utf-8 "Ставит кодировку UTF-8
+set nocompatible "Отключает обратную совместимость с Vi
+syntax enable "Включает подсветку синтаксиса
+set iminsert=0
+set imsearch=0
+inoremap <C-l> <C-^> " Чтобы вместо Ctrl-^ нажимать Ctrl-L
+set relativenumber
+set number
+set ruler
+set confirm
+set termguicolors
+set ai
+set listchars=tab:⭿⭿
+"set listchars=tab:··
+set list
+nnoremap <SPACE> <Nop>
+let mapleader=" "
+call plug#begin('~/.local/share/nvim/site/bundle')
+"Plug 'ErichDonGubler/vim-sublime-monokai' "Добавьте это в список плагинов
+"Plug 'sainnhe/gruvbox-material'
+Plug 'yuttie/comfortable-motion.vim'
+"Plug 'morhetz/gruvbox'
+"Plug 'habamax/vim-gruvbit'
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'pacha/vem-dark'
+Plug 'pacha/vem-statusline'
+Plug 'mcchrish/nnn.vim'
+"Plug 'knubie/vim-kitty-navigator'
+call plug#end() "Перестать это делать
+"colorscheme sublimemonokai "Добавьте это НЕ в список плагинов
+"source $HOME/.config/nvim/themes/monokai.vim
+set termguicolors
+"colorscheme gruvbit
+colorscheme vem-dark
+"let g:gruvbit_transp_bg = v:true
+"let g:airline_powerline_fonts = 1 "Включить поддержку Powerline шрифтов
+"let g:airline#extensions#keymap#enabled = 0 "Не показывать текущий маппинг
+"let g:airline_section_z = "\ue0a1:%l/%L Col:%c" "Кастомная графа положения курсора
+"let g:Powerline_symbols='unicode' "Поддержка unicode
+"let g:airline#extensions#xkblayout#enabled = 0 "Про это позже расскажу
+"let g:airline_theme = 'gruvbox_material'
+"hi! Normal ctermbg=NONE guibg=NONE
+"highlight EndOfBuffer ctermfg=black ctermbg=black
+set fillchars=fold:\ ,vert:\│,eob:\ ,msgsep:‾
+"set guicursor=n-v-c:blinkon0
+"set guicursor=a:blinkoff0
+"let g:gruvbox_transparent_bg = '1'
+"let g:gruvbox_termcolors = '256'
+" Wayland Clipboard Support
+xnoremap "+y y:call system("wl-copy", @")<cr>  
+nnoremap "+p :let @"=substitute(system("wl-paste --no-newline"), '<C-v><C-m>', '', 'g')<cr>p  
+nnoremap "*p :let @"=substitute(system("wl-paste --no-newline --primary"), '<C-v><C-m>', '', 'g')<cr>p
+let &t_ZH="\033[3m"
+let &t_ZR="\033[23m"
+"set t_ZH=3m
+"set t_ZR=23m
+hi! Comment cterm=italic
+hi! Comment gui=italic
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_left_alt_sep = ''
+nnoremap <silent> gc hxp
+let g:neovide_transparency=0.95
+let g:neovide_cursor_vfx_mode = "torpedo"
+let g:neovide_cursor_trail_length=0.8
+let g:neovide_cursor_antialiasing=v:true
+let g:neovide_cursor_animate_in_insert_mode=v:true
+set guifont=FiraCodeNerdFont-Complete
+set langmap=ХБУКЕНГШЖЗФЫВАПРОЛДЯЧСМИТЬ;QWERTYUIOPASDFGHJKLZXCVBNM,хбукенгшжзфывапролдячсмить;qwertyuiopasdfghjklzxcvbnm
+inoremap  <Up>     <NOP>
+inoremap  <Down>   <NOP>
+inoremap  <Left>   <NOP>
+inoremap  <Right>  <NOP>
+noremap   <Up>     <NOP>
+noremap   <Down>   <NOP>
+noremap   <Left>   <NOP>
+noremap   <Right>  <NOP>
+hi! Normal ctermbg=NONE 
+language en_US
+"let s:pairs={
+"            \'<': '>',
+"            \'{': '}',
+"            \'[': ']',
+"            \'(': ')',
+"            \'«': '»',
+"            \'„': '“',
+"            \'“': '”',
+"            \'‘': '’',
+"        \}
+inoremap { {}<Esc>ha
+inoremap ( ()<Esc>ha
+inoremap [ []<Esc>ha
+inoremap " ""<Esc>ha
+inoremap ' ''<Esc>ha
+inoremap ` ``<Esc>ha

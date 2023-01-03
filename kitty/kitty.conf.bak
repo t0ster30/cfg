@@ -1,0 +1,189 @@
+# include themes/my-themes/t0ster-gruvbox-alt.conf
+include themes/themes/t0ster-tango-light.conf
+# include themes/my-themes/t0ster-dark-book.conf
+# include themes/my-themes/gruvbox-light-t0ster.conf
+# include themes/my-themes/gruvbox8-light-t0ster.conf
+# include themes/my-themes/t0ster-gruvbox8-based.conf
+# include themes/my-themes/t0ster-gruvbox-alt.conf
+# include themes/gruvbox8-light.conf
+# include themes/gruvbox-light-soft.conf
+# include themes/Github.conf
+# include themes/3024_Day.conf
+# include themes/Material.conf
+# include themes/Tango_Light.conf
+
+# Font
+# font_family	Drafting* Mono
+# bold_font Drafting* Mono Bold
+# bold_italic_font Drafting* Mono Bold Italic
+# italic_font Drafting* Mono Italic
+# font_family		Writer
+# bold_font			Writer-Bold
+# italic_font		Writer-Italic
+# bold_italic_font	Writer-BoldItalic
+font_family      FiraCode Nerd Font
+bold_font        Fira Code SemiBold Nerd Font Complete
+italic_font      FiraCode-Regular-Italic
+bold_italic_font FiraCode-BoldItalic
+# Fira Code Retina Nerd Font Complete
+# Fira Code Light Nerd Font Complete
+
+#font_family		UbuntuMono-Nerd-Font-Regular
+#font_family		iA Writer Duo S
+font_size		11.0
+font_features		FiraCodeNerdFontComplete-Regular +zero +ss04 +ss06 +ss07 +onum
+font_features		FiraCodeNerdFontComplete-Bold +zero +ss04 +ss06 +ss07 +onum
+font_features		FiraCode-Regular-Italic +zero +ss04 +ss06 +ss07 +onum
+font_features		FiraCode-BoldItalic +zero +ss04 +ss06 +ss07 +onum
+disable_ligatures	never
+
+# Window
+# background_opacity	0.95
+# initial_window_width 	640
+# initial_window_height	480
+initial_window_width 	730
+initial_window_height	548
+#initial_window_width 	1360
+#initial_window_height	768
+# initial_window_width 	2560
+# initial_window_height	1440
+draw_minimal_borders	yes
+hide_window_decorations	yes
+background_tint 	0.5
+window_padding_width	1
+remember_window_size	no
+# enabled_layouts tall:bias=55;full_size=1;mirrored=true
+# enabled_layouts tall:bias=56;full_size=1;mirrored=true
+# map ctrl+left resize_window narrower 1
+# map ctrl+right resize_window wider 1
+# map ctrl+up resize_window taller 1
+# map ctrl+down resize_window shorter 1
+
+# Tabs
+# tab_separator		" |"
+#tab_separator		' ┇'
+tab_bar_edge		top
+tab_title_template 	"{index} | {title}"
+# tab_bar_style		powerline
+map kitty_mod+space		select_tab
+tab_bar_style		hidden
+tab_bar_margin_width	0.3
+#tab_powerline_style	slanted
+#active_tab_foreground   #5e5747
+# active_tab_foreground   #4e4e4e
+#active_tab_background   #ffaf00
+# active_tab_background   #a89984
+active_tab_font_style   bold
+# inactive_tab_foreground #bca38a
+# inactive_tab_background #4e4e4e
+inactive_tab_font_style normal
+
+# Cursor
+cursor_shape		underline
+#cursor				#dfbf8e
+#cursor				#7a7a7a
+#cursor_stop_blinking_after 10.0
+#cursor_blink_interval 	0.9
+cursor_underline_thickness 0.8
+pointer_shape_when_grabbed hand
+cursor_underline_thickness 1.5
+# cursor_blink_interval 0.5
+# cursor_stop_blinking_after 2.0
+
+# Else
+# enable_audio_bell 	yes
+linux_display_server wayland
+scrollback_lines	 20000
+# scrollback_pager     e3ne
+allow_remote_control yes
+dynamic_background_opacity yes
+shell_integration	 no-cursor
+# listen_on						=unix:@mykitty
+
+# Startup Session
+# startup_session		~/.config/kitty/my-session
+
+# Mappings
+map super+c copy_to_clipboard
+map super+v paste_from_clipboard
+map kitty_mod+f11 toggle_fullscreen
+map kitty_mod+f10 toggle_maximized
+map kitty_mod+u kitten unicode_input
+map kitty_mod+e open_url_with_hints
+# map ctrl+insert copy_to_clipboard
+# map shift+insert paste_from_clipboard
+#map ctrl+j kitten pass_keys.py neighboring_window bottom ctrl+j
+#map ctrl+k kitten pass_keys.py neighboring_window top    ctrl+k
+#map ctrl+h kitten pass_keys.py neighboring_window left   ctrl+h
+#map ctrl+l kitten pass_keys.py neighboring_window right  ctrl+l
+map ctrl+page_down previous_tab
+map ctrl+page_up next_tab
+map shift+up        kitten kittens/smart_scroll.py scroll_line_up   shift+up
+map shift+down      kitten kittens/smart_scroll.py scroll_line_down shift+down
+map shift+page_up   kitten kittens/smart_scroll.py scroll_page_up   shift+page_up
+map shift+page_down kitten kittens/smart_scroll.py scroll_page_down shift+page_down
+map kitty_mod+up   kitten kittens/smart_scroll.py scroll_page_up   shift+page_up
+map kitty_mod+down kitten kittens/smart_scroll.py scroll_page_down shift+page_down
+#map ctrl+shift+home kitten smart_scroll.py scroll_home      ctrl+shift+home
+#map ctrl+shift+end  kitten smart_scroll.py scroll_end       ctrl+shift+end
+
+map kitty_mod+b kitten kittens/kitty_grab/grab.py
+#map F7 kitten kittens/kitty_grab/grab.py # dead
+touch_scroll_multiplier 5.5
+map kitty_mod+/ launch --location=hsplit --allow-remote-control kitty +kitten kittens/search.py @active-kitty-window-id
+
+# Mouse
+url_style 		double
+focus_follows_mouse 	yes
+pointer_shape_when_grabbed beam
+cursor_blink_interval	0
+# cursor_text_color background
+# mouse_map left click ungrabbed no-op
+mouse_map left+right doublepress ungrabbed mouse_selection word
+mouse_map right+left doublepress ungrabbed mouse_selection word
+
+# Kitty windows
+#active_border_color	#8a931f 716b63
+# active_border_color	#615a52
+# inactive_border_color	#2e2e2e
+
+# gruvbox-dark colorscheme for kitty
+# snazzy theme used as base
+
+#foreground            #ebdbb2
+#background            #272727
+#selection_foreground  #655b53
+#selection_background  #ebdbb2
+#url_color             #d65c0d
+#
+## black
+#color0   #272727
+#color8   #928373
+#
+## red
+#color1   #cc231c
+#color9   #fb4833
+#
+## green
+#color2   #989719
+#color10  #b8ba25
+#
+## yellow
+#color3   #d79920
+#color11  #fabc2e
+#
+## blue
+#color4  #448488
+#color12 #83a597
+#
+## magenta
+#color5   #b16185
+#color13  #d3859a
+#
+## cyan
+#color6   #689d69
+#color14  #8ec07b
+#
+## white
+#color7   #a89983
+#color15  #ebdbb2

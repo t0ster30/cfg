@@ -1,0 +1,44 @@
+import:
+  - ~/.config/alacritty/alacritty.yml
+
+window:
+  dimensions:
+    columns: 100
+    lines: 35
+  # Window padding (changes require restart)
+  #
+  # Blank space added around the window in pixels. This padding is scaled
+  # by DPI and the specified value is always added at both opposing sides.
+  padding:
+    x: 3
+    y: 3
+  # Spread additional padding evenly around the terminal content.
+  dynamic_padding: true
+  decorations: none
+  dynamic_title: true
+  background_transparency: 0.6
+scrolling:
+  history: 10000
+font:
+  normal:
+    # Default:
+    #   - (macOS) Menlo
+    #   - (Linux/BSD) monospace
+    #   - (Windows) Consolas
+    family: FiraCode
+    style: Retina
+  bold:
+    family: FiraCode
+    style: Bold
+  italic:
+    family: FiraCode
+    style: Italic
+  bold_italic:
+    style: Bold Italic
+  size: 11.0
+# Colors (Tomorrow Night)
+colors:
+  # Default colors
+  #primary:
+    background: '2e2e2e'
+    foreground: '#c5c8c6'

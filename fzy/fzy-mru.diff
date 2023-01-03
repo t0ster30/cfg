@@ -1,0 +1,185 @@
+--- src/choices.c	2021-07-20 13:37:45.568785347 +0300
++++ src/choices.c.patched	2021-07-20 13:44:59.822507933 +0300
+@@ -15,7 +15,7 @@
+ /* Initial size of choices array */
+ #define INITIAL_CHOICE_CAPACITY 128
+ 
+-static int cmpchoice(const void *_idx1, const void *_idx2) {
++static int cmpchoice_score(const void *_idx1, const void *_idx2) {
+ 	const struct scored_result *a = _idx1;
+ 	const struct scored_result *b = _idx2;
+ 
+@@ -36,6 +36,19 @@
+ 	}
+ }
+ 
++static int cmpchoice_order(const void *_idx1, const void *_idx2) {
++	const struct scored_result *a = _idx1;
++	const struct scored_result *b = _idx2;
++
++	if (a->order == b->order) {
++		return 0;
++	} else if (a->order < b->order) {
++		return 1;
++	} else {
++		return -1;
++	}
++}
++
+ static void *safe_realloc(void *buffer, size_t size) {
+ 	buffer = realloc(buffer, size);
+ 	if (!buffer) {
+@@ -108,6 +121,12 @@
+ 	c->capacity = c->size = 0;
+ 	choices_resize(c, INITIAL_CHOICE_CAPACITY);
+ 
++	if (!strcmp(options->sorting_method, "score")) {
++		c->cmpchoice = cmpchoice_score;
++	} else {
++		c->cmpchoice = cmpchoice_order;
++	}
++
+ 	if (options->workers) {
+ 		c->worker_count = options->workers;
+ 	} else {
+@@ -182,7 +201,7 @@
+ 	pthread_mutex_unlock(&job->lock);
+ }
+ 
+-static struct result_list merge2(struct result_list list1, struct result_list list2) {
++static struct result_list merge2(struct result_list list1, struct result_list list2, const choices_t *c) {
+ 	size_t result_index = 0, index1 = 0, index2 = 0;
+ 
+ 	struct result_list result;
+@@ -194,7 +213,7 @@
+ 	}
+ 
+ 	while(index1 < list1.size && index2 < list2.size) {
+-		if (cmpchoice(&list1.list[index1], &list2.list[index2]) < 0) {
++		if (c->cmpchoice(&list1.list[index1], &list2.list[index2]) < 0) {
+ 			result.list[result_index++] = list1.list[index1++];
+ 		} else {
+ 			result.list[result_index++] = list2.list[index2++];
+@@ -233,13 +252,14 @@
+ 			if (has_match(job->search, c->strings[i])) {
+ 				result->list[result->size].str = c->strings[i];
+ 				result->list[result->size].score = match(job->search, c->strings[i]);
++				result->list[result->size].order = i;
+ 				result->size++;
+ 			}
+ 		}
+ 	}
+ 
+ 	/* Sort the partial result */
+-	qsort(result->list, result->size, sizeof(struct scored_result), cmpchoice);
++	qsort(result->list, result->size, sizeof(struct scored_result), c->cmpchoice);
+ 
+ 	/* Fan-in, merging results */
+ 	for(unsigned int step = 0;; step++) {
+@@ -255,7 +275,7 @@
+ 			exit(EXIT_FAILURE);
+ 		}
+ 
+-		w->result = merge2(w->result, job->workers[next_worker].result);
++		w->result = merge2(w->result, job->workers[next_worker].result, c);
+ 	}
+ 
+ 	return NULL;
+--- src/choices.h	2021-07-20 13:47:16.569471421 +0300
++++ src/choices.h.patched	2021-07-20 13:47:36.925909935 +0300
+@@ -9,6 +9,7 @@
+ struct scored_result {
+ 	score_t score;
+ 	const char *str;
++	size_t order;
+ };
+ 
+ typedef struct {
+@@ -25,6 +26,8 @@
+ 	size_t selection;
+ 
+ 	unsigned int worker_count;
++
++	int (*cmpchoice)(const void *, const void *);
+ } choices_t;
+ 
+ void choices_init(choices_t *c, options_t *options);
+--- src/config.def.h	2021-07-20 13:49:45.020656060 +0300
++++ src/config.def.h.patched	2021-07-20 13:50:02.793035464 +0300
+@@ -17,3 +17,4 @@
+ #define DEFAULT_NUM_LINES 10
+ #define DEFAULT_WORKERS 0
+ #define DEFAULT_SHOW_INFO 0
++#define DEFAULT_SORTING_METHOD "score"
+--- src/options.c	2021-07-20 13:51:05.686375337 +0300
++++ src/options.c.patched	2021-07-20 13:54:33.426775699 +0300
+@@ -20,6 +20,7 @@
+     " -0, --read-null          Read input delimited by ASCII NUL characters\n"
+     " -j, --workers NUM        Use NUM workers for searching. (default is # of CPUs)\n"
+     " -i, --show-info          Show selection info line\n"
++    " -m, --sorting-method=METHOD Sorting method of the matches (default score)\n"
+     " -h, --help     Display this help and exit\n"
+     " -v, --version  Output version information and exit\n";
+ 
+@@ -38,6 +39,7 @@
+ 				   {"benchmark", optional_argument, NULL, 'b'},
+ 				   {"workers", required_argument, NULL, 'j'},
+ 				   {"show-info", no_argument, NULL, 'i'},
++				   {"sorting-method", required_argument, NULL, 'm'},
+ 				   {"help", no_argument, NULL, 'h'},
+ 				   {NULL, 0, NULL, 0}};
+ 
+@@ -54,13 +56,14 @@
+ 	options->workers         = DEFAULT_WORKERS;
+ 	options->input_delimiter = '\n';
+ 	options->show_info       = DEFAULT_SHOW_INFO;
++	options->sorting_method  = DEFAULT_SORTING_METHOD;
+ }
+ 
+ void options_parse(options_t *options, int argc, char *argv[]) {
+ 	options_init(options);
+ 
+ 	int c;
+-	while ((c = getopt_long(argc, argv, "vhs0e:q:l:t:p:j:i", longopts, NULL)) != -1) {
++	while ((c = getopt_long(argc, argv, "vhs0e:q:l:t:p:j:m:i", longopts, NULL)) != -1) {
+ 		switch (c) {
+ 			case 'v':
+ 				printf("%s " VERSION " © 2014-2018 John Hawthorn\n", argv[0]);
+@@ -111,6 +114,15 @@
+ 				}
+ 				options->num_lines = l;
+ 			} break;
++			case 'm':
++				if (strcmp(optarg, "score") && strcmp(optarg, "order")) {
++					fprintf(stderr, "Invalid format for --sorting-method: %s\n", optarg);
++					fprintf(stderr, "Must be either 'score' or 'order'\n");
++					usage(argv[0]);
++					exit(EXIT_FAILURE);
++				}
++				options->sorting_method = optarg;
++				break;
+ 			case 'i':
+ 				options->show_info = 1;
+ 				break;
+--- src/options.h	2021-07-20 13:55:14.031632088 +0300
++++ src/options.h.patched	2021-07-20 13:55:33.372039629 +0300
+@@ -13,6 +13,7 @@
+ 	unsigned int workers;
+ 	char input_delimiter;
+ 	int show_info;
++	const char *sorting_method;
+ } options_t;
+ 
+ void options_init(options_t *options);
+--- fzy.1	2021-07-29 23:27:13.488107669 +0300
++++ fzy.1.patched	2021-07-29 23:53:04.581284349 +0300
+@@ -43,6 +43,9 @@
+ .TP
+ .BR \-0 ", " \-\-read-null
+ Read input delimited by ASCII NUL characters.
++
++.TP
++.BR \-m ", " \-\-sorting-method=METHOD Choose the sorting method of the matches score or order (default is score).
+ .
+ .TP
+ .BR \-h ", " \-\-help

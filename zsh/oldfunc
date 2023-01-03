@@ -1,0 +1,21 @@
+# to show video files, run: list video
+
+list (){
+    # find . -maxdepth 1 | file -if- | grep "$1" | awk -F: '{printf "%s\0", $1}' | nnn
+    fd -d 1 | file -if- | grep "$1" | awk -F: '{printf "%s\0", $1}' | nnn
+}
+
+mans (){    # Bash
+    local pages string
+    if [[ -n $2 ]]
+    then
+        pages=(${@:2})
+        string="$1"
+    else
+        pages=$1
+    fi
+    # GNU man
+    man ${2:+--pager="less -p \"$string\" -G"} ${pages[@]}
+    # BSD man
+    # man ${2:+-P "less -p \"$string\" -G"} ${pages[@]}
+}

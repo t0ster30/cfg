@@ -1,0 +1,29 @@
+--- filet.c	2021-07-16 18:54:41.903600104 +0300
++++ filet.c.patched	2021-07-16 18:57:43.988179427 +0300
+@@ -473,7 +473,7 @@
+     c = getchar();
+     switch (c) {
+     case 'A':
+-        return 'k';
++        return 'e';
+         break;
+     case 'B':
+         return 'j';
+@@ -701,7 +701,7 @@
+                 }
+             }
+             break;
+-        case 'k':
++        case 'e':
+             if (sel > 0) {
+                 draw_line(&ents[sel], false);
+                 if (y == 0) {
+@@ -765,7 +765,7 @@
+                 printf("\033[%dH", row);
+             }
+             break;
+-        case 'e':
++        case 'd':
+             spawn(path, editor, ents[sel].name, row);
+             fetch_dir = true;
+             break;

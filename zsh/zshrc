@@ -1,0 +1,201 @@
+# tsr's zsh config
+source ~/.config/zsh/zprofile
+source ~/.config/zsh/alias
+fpath=(
+	~/.config/zsh/comp
+	$fpath
+)
+autoload -U colors && colors
+autoload -Uz n
+autoload -Uz x
+#autoload -Uz pk ## perkeep has same name -- pk
+autoload -Uz =
+autoload -U zsh-mime-setup
+zsh-mime-setup
+HISTSIZE=100000000000
+SAVEHIST=100000000000
+HISTFILE="$XDG_DATA_HOME/zsh/history"
+setopt autocd
+setopt auto_continue
+setopt share_history
+setopt inc_append_history
+setopt hist_ignore_space
+setopt hist_find_no_dups
+setopt correctall
+setopt hash_cmds
+setopt hash_dirs
+
+stty -ixon # Disable ctrl-s and ctrl-q for pausing shell
+
+# Basic auto/tab completion
+autoload -U compinit
+zstyle ':completion:*' menu select
+zstyle ':completion:*' list-dirs-first
+# bindkey '^[[Z' reverse-menu-complete
+zmodload zsh/complist
+compinit
+_comp_options+=(globdots) # include hidden files
+zstyle ':completion:*' rehash true
+
+bindkey -M menuselect "${terminfo[cbt]}" reverse-menu-complete
+
+#exit_zsh() { exit }
+#zle -N exit_zsh
+#bindkey '^D' exit_zsh
+
+# Completion for kitty
+# kitty + complete setup zsh | source /dev/stdin
+
+# Use vim keys in tab complete menu:
+bindkey -M menuselect 'h' vi-backward-char
+bindkey -M menuselect 'e' vi-up-line-or-history
+bindkey -M menuselect 'l' vi-forward-char
+bindkey -M menuselect 'j' vi-down-line-or-history
+# bindkey -e '^?' backward-delete-char
+autoload edit-command-line; zle -N edit-command-line
+bindkey '^s' vi-cmd-mode
+bindkey '^q' transpose-chars # swap two last characters
+bindkey '^u' backward-kill-line
+bindkey '^X^k' kill-whole-line
+bindkey '<M-r>' "${@[$#]}"
+bindkey '^s' transpose-words
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey -M vicmd 'e' vi-up-line-or-history
+bindkey -M vicmd 'd' vi-forward-word-end
+bindkey -M vicmd 't' vi-delete
+bindkey -M vicmd 'k' copy-prev-shell-word
+bindkey -M vicmd 'gd' vi-backward-word-end
+bindkey -M vicmd 'gD' vi-backward-blank-word-end
+bindkey -M vicmd '?' history-incremental-search-backward
+bindkey -M vicmd '/' history-incremental-search-forward
+autoload -Uz chpwd_recent_dirs cdr add-zsh-hook
+add-zsh-hook chpwd chpwd_recent_dirs
+
+export PROMPT_PATH_STYLE="shortpath"
+source ~/.config/zsh/prompt
+
+# ALT-C: cd into the selected directory
+# CTRL-T: Place the selected file path in the command line
+# CTRL-R: Place the selected command from history in the command line
+# CTRL-P: Place the selected process ID in the command line
+bindkey '\ec' fzy-cd-widget
+bindkey '^T'  fzy-file-widget
+bindkey '^R'  fzy-history-widget
+#bindkey '^P'  fzy-proc-widget
+bindkey '^Z'  fzy-proc-widget
+zstyle :fzy:file command rg --files
+
+autoload -Uz run-help
+(( ${+aliases[run-help]} )) && unalias run-help
+alias help=run-help
+autoload -Uz run-help-git run-help-ip run-help-openssl run-help-p4 run-help-sudo run-help-svk run-help-svn
+source /etc/zsh_command_not_found
+
+eval $(dircolors $XDG_CONFIG_HOME/zsh/dirclr)
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=243"
+source $XDG_CONFIG_HOME/zsh/plug/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $XDG_CONFIG_HOME/zsh/plug/zsh-autopair/autopair.zsh
+source $XDG_CONFIG_HOME/zsh/plug/zsh-fzy/zsh-fzy.plugin.zsh
+source $XDG_CONFIG_HOME/zsh/plug/anybar-zsh/anybar.plugin.zsh
+source $XDG_CONFIG_HOME/zsh/plug/fsyh/F-Sy-H.plugin.zsh
+
+alert(){notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"}
+
+# eval "$(jump shell)"
+# TMOUT=1
+# TRAPALRM() {
+#   zle reset-prompt
+# }
+
+# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh# Запаковать архив
+# example: pk tar file
+# To use parallel (multi-threaded)
+# implementation of compression algorithms:
+# tar -z ... -> tar -Ipigz ...
+# tar -j ... -> tar -Ipbzip2 ...
+# tar -J ... -> tar -Ipixz ...autoload -U zcalc
+pk () {
+ if [ $1 ] ; then
+ case $1 in
+ tar)   tar cpf $2.tar $2              ;;
+ tbz)   tar -Ipbzip2 -cf $2.tbz2 $2     ;;
+ tgz)   tar -Ipigz -cf $2.tgz $2        ;;
+ txz)   tar -I' xz -9 -T0' -cf $2.txz $2 ;;
+ tzs)   tar -Izstd -cf $2.tzs $2      ;;
+ zst)   zstd $2 ;;
+ bz2)   pbzip2 $2 ;;
+ gz)    gzip -c -9 -n $2 > $2.gz ;;
+ xz)    xz -9 -T0 $2 ;;
+ zip)   zip -r $2.zip $2 ;;
+ 7z)    7z a $2.7z $2    ;;
+ *)     echo "'$1' —— wrong format" ;;
+ esac
+ else
+ echo "'$1' —— not a valid file"
+ fi
+}
+# archive extraction
+x () {
+ if [ -f $1 ] ; then
+ case $1 in
+ *.tar.bz2)   tar -I pbzip2 -xf $1  ;;
+ *.tbz2)      tar -I pbzip2 -xf $1  ;;
+ *.tbz)       tar -I pbzip2 -xf $1  ;;
+ *.tar.xz)    tar -I 'xz -9 -T0' -xf $1 ;;
+ *.txz)       tar -I 'xz -9 -T0' -xf $1 ;;
+ *.tar.zst)   tar -I 'unzstd' -xf $1    ;;
+ *.tar.gz)    tar -I pigz -xf $1    ;;
+ *.tgz)       tar -I pigz -xf $1    ;;
+ *.bz2)       pbzip2 -d $1         ;;
+ *.gz)        gunzip $1       ;;
+ *.tar)       tar x $1        ;;
+ *.rar)       unrar x $1      ;;
+ *.zip)       unzip $1        ;;
+ *.Z)         uncompress $1   ;;
+ *.7z)        7z x $1         ;;
+ *)           echo "cannot extract '$1' ):" ;;
+ esac
+ else
+ echo "'$1' is not a valid file"
+ fi
+}
+= () {noglob zcalc -f -e "$*"}
+up () {DEEP=$1; for i in $(seq 1 ${DEEP:-"1"}); do cd ../; done;}
+n () {
+    # Block nesting of nnn in subshells
+    if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
+        echo "nnn is already running"
+        return
+    fi
+
+    # The default behaviour is to cd on quit (nnn checks if NNN_TMPFILE is set)
+    # To cd on quit only on ^G, remove the "export" as in:
+    #     NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    # NOTE: NNN_TMPFILE is fixed, should not be modified
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    # Unmask ^Q (, ^V etc.) (if required, see `stty -a`) to Quit nnn
+    # stty start undef
+    # stty stop undef
+    # stty lwrap undef
+    # stty lnext undef
+
+    nnn "$@"
+
+    if [ -f "$NNN_TMPFILE" ]; then
+            . "$NNN_TMPFILE"
+            rm -f "$NNN_TMPFILE" > /dev/null
+    fi
+}
+lmv () {
+	_path$(dirname -- "$1")
+	_target="${_path%/}/$2"
+	mv -- "$1" "$_target"
+}
+abiword () {
+	flatpak run --branch=stable --arch=x86_64 \
+	--command=abiword --file-forwarding \
+	com.abisource.AbiWord $@
+}

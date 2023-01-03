@@ -1,0 +1,6 @@
+source ~/.config/neomutt/gruvbox/colors-gruvbox-shuber.muttrc
+#source ~/.config/neomutt/accounts/gmail
+#mailboxes	= +INBOX
+# set arrow_cursor
+# set editor	= "nvim"
+# set reply_to

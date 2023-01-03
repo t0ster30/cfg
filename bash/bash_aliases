@@ -1,0 +1,23 @@
+alias rm="rm -i"
+alias h="cd ~/"
+alias ..="cd .."
+alias mv="mv -iv"
+alias n="nnn"
+alias tg="telegram-cli"
+alias icat="kitty +kitten icat --align=left"
+alias l="ls -GFh"
+alias sl="l"
+alias ll='ls-color'
+alias la="ls -hA"
+alias lla='ls -AlF'
+alias ...='cd ../..'
+alias .3='cd ../../..'
+alias .4='cd ../../../..'
+alias .5='cd ../../../../..'
+alias lynx='lynx -vikeys'
+alias diff='diff --color'
+alias md='mkdir -v'
+alias v="$EDITOR"
+alias se="du -a ~/.scripts/* ~/.config/* | awk '{print \$2}' | fzf | xargs -r $EDITOR"
+alias theme="cd ~/.config/kitty/themes && fzf --preview 'head -n 40 {} && kitty @ --to unix:/tmp/kitty set-colors -a -c {}'; cd -"
+alias theme-reset="kitty @ --to unix:/tmp/kitty set-colors --reset"

@@ -1,0 +1,71 @@
+--- src/nnn.c.patched	2021-08-01 22:34:55.112759773 +0300
++++ src/nnn.c	2021-08-01 22:43:09.329570087 +0300
+@@ -4559,7 +4559,7 @@
+ 			arg[1] = op;
+ 	} else if (is_suffix(fpath, ".zip")) {
+ 		util = utils[UTIL_UNZIP];
+-		arg[1] = (op == 'l') ? 'v' /* verbose listing */ : '\0';
++		arg[1] = (op == 'o') ? 'v' /* verbose listing */ : '\0';
+ 		arg[2] = '\0';
+ 	} else {
+ 		util = utils[UTIL_TAR];
+@@ -5090,7 +5090,7 @@
+ 			while (--len && (g_buf[len] == '/')) /* Trim all trailing '/' */
+ 				g_buf[len] = '\0';
+ 		}
+-	} else if (op == 'l') {
++	} else if (op == 'o') {
+ 		rmlistpath(); /* Remove last list mode path, if any */
+ 		nextpath = load_input(fd, *path);
+ 	} else if (op == 'p') {
+@@ -6759,13 +6759,13 @@
+ 			if (tmp && !regexec(&archive_re, tmp, 0, NULL, 0)) {
+ #endif
+ 				r = get_input(messages[MSG_ARCHIVE_OPTS]);
+-				if (r == 'l' || r == 'x') {
++				if (r == 'o' || r == 'x') {
+ 					mkpath(path, pent->name, newpath);
+ 					if (!handle_archive(newpath, r)) {
+ 						presel = MSGWAIT;
+ 						goto nochange;
+ 					}
+-					if (r == 'l') {
++					if (r == 'o') {
+ 						statusbar(path);
+ 						goto nochange;
+ 					}
+@@ -6785,7 +6785,7 @@
+ 					goto begin;
+ 				}
+ 
+-				if (r != 'o') {
++				if (r != 'l') {
+ 					printwait(messages[MSG_INVALID_KEY], &presel);
+ 					goto nochange;
+ 				}
+@@ -7520,7 +7520,7 @@
+ 				tmp = xreadline(NULL, messages[MSG_SSN_NAME]);
+ 				if (tmp && *tmp)
+ 					save_session(tmp, &presel);
+-			} else if (r == 'l' || r == 'r') {
++			} else if (r == 'o' || r == 'r') {
+ 				if (load_session(NULL, &path, &lastdir, &lastname, r == 'r')) {
+ 					setdirwatch();
+ 					goto begin;
+@@ -8118,14 +8118,14 @@
+ 		case 'K':
+ 			check_key_collision();
+ 			return EXIT_SUCCESS;
+-		case 'l':
++		case 'o':
+ 			if (env_opts_id < 0)
+ 				scroll_lines = atoi(optarg);
+ 			break;
+ 		case 'n':
+ 			cfg.filtermode = 1;
+ 			break;
+-		case 'o':
++		case 'l':
+ 			cfg.nonavopen = 1;
+ 			break;
+ 		case 'p':

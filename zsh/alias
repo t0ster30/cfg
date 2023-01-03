@@ -1,0 +1,116 @@
+alias D=dirs
+alias ..='cd ..'
+alias ...='cd ../../'
+alias a2=aria2c
+#alias abiword="flatpak run --branch=stable --arch=x86_64 --command=abiword --file-forwarding com.abisource.AbiWord"
+alias apt=apt-fast
+alias c='serve -p 5500'
+cls(){printf '\ec'}
+#alias cls="printf '\033c\033[H\033[J'" #should work on /any/ vt100+
+clear(){printf '\e[H\e[2J'}
+alias cmines="cmines -s $h/.config/cminesrc"
+alias csokoban="csokoban -S $h/.local/share/cgames"
+alias d=diary
+alias ddgr='noglob ddgr'
+alias del=trash-put
+alias e='noglob e'
+alias fj=popd
+alias g=grep
+alias h="cd $h"
+alias j=pushd
+alias get='curl -O'
+alias gz=gzip
+alias mv='mv -iv'
+alias nq='nq -c'
+#alias o=xdg-open
+alias open=mimi
+alias p=pass
+# please, please do not alias the rm. 
+# not-so-smart people use it in scripts.
+#alias rm=trash
+alias reset=cls
+#alias s=e3
+alias s=micro
+alias sc=sc-im
+alias svi=vis
+alias tg=telegram-cli
+alias v="$EDITOR"
+alias icat='kitty +kitten icat --align=left'
+alias f='pushd +"$(dirs -v | fzy | cut -f1)"'
+#alias gp='fd -t f | fzf | wl-copy -n'
+alias 2th="2th $h/.local/share/events"
+alias bar='kitty @ launch --type=os-window --keep-focus termbar && kitty @ resize-os-window --match title:termbar --width 15 --height 2'
+alias cava='kitty @ launch --keep-focus --type=os-window --os-window-title=cava cava && kitty @ resize-os-window --match cmdline:cava --width 52 --height 16'
+alias wlclock="wlclock --no-input --layer=top --position=bottom-right --background-colour=#e9e9e8 --border-size 2 --border-colour=#464646 &"
+alias hn="history | tail -n $1"
+alias ping="prettyping"
+alias abook="abook --config $XDG_CONFIG_HOME/abook/abookrc --datafile $XDG_DATA_HOME/abook/addressbook"
+
+alias -s htm=firefox
+alias -s html=firefox
+alias -s ini=ma
+alias -s text=ma
+alias -s ms=ma
+alias -s jpg=imv
+alias -s png=imv
+alias -s svg=imv
+alias -s pdf=zathura
+
+alias theme-reset='kitty @ --to unix:/tmp/kitty set-colors --reset'
+alias theme="cd $XDG_CONFIG_HOME/kitty/themes && fzf --preview 'head -n 40 {} && kitty @ --to unix:@mykitty set-colors -a -c {}'; cd -"
+alias reboot="printf 'reboot: must be superuser\n'"
+alias temp="kitty @ launch --type=os-window --title Temp --os-window-class Temp --keep-focus watch -t -n1.5 -c 'sensors -A pch_cannonlake-virtual-0 coretemp-isa-0000 nvme-pci-6d00 | $XDG_BIN_HOME/color_sensors.awk' && kitty @ resize-os-window --match title:Temp --width 25 --height 10"
+alias dtop="kitty @ launch --type=os-window --keep-focus top && kitty @ resize-os-window --match title:top --width 55 --height 21"
+alias vi="$XDG_BIN_HOME/vi"
+
+# acme
+alias a="$XDG_BIN_HOME/a &"
+alias acme="acme &"
+alias win="9 win"
+# alias dt="vi $(find -type f | fzy)"
+
+# mblaze
+alias new=alias new="(mlist -N ~/Mail/gmail/inbox; mlist -N ~/Mail/yandex/inbox) | mblaze-sort -d | mscan | sed 's/^ .      //g
+s/^>.      //g'"
+alias inc="minc $h/Mail/gmail/inbox"
+
+# ls
+alias ls="ls --color=auto --group-directories-first"
+alias la="ls -hA"
+alias ll='clear; ls-color'
+alias lla='clear; ls-color -A'
+alias l="clear; ls -CGFh"
+alias lc="clear; ls"
+alias sl="clear; ls"
+
+#alias se='du -a ~/.scripts* $XDG_CONFIG_HOME/* | cut -f2 | fzf | xargs -r $EDITOR'
+
+alias lynx='lynx -vikeys'
+alias inkscape='/usr/bin/flatpak run --branch=stable --arch=x86_64 --command=inkscape org.inkscape.Inkscape'
+
+# Taken from Luke Smith
+alias diff='diff --color'
+alias md='mkdir -v'
+alias ccat='highlight --out-format-ansi'
+alias cp='cp -iv'
+
+alias se="du -a $h/.scripts/* $XDG_CONFIG_HOME/* | awk '{print \$2}' | fzy -l 25 -p '-> ' | xargs -r $VISUAL"
+# symbol list: ᐅ 
+
+#alias cmus="tmux new-session -s cmus -d '$(which cmus)' 2> /dev/null; tmux switch-client -t cmus"
+
+alias t='todo'
+
+alias mvi='mpv --config-dir=$XDG_CONFIG_HOME/mvi'
+
+# scan doc/image from printer
+#function scan{
+#	scanimage -d "brother:bus2;dev1" --format=tiff | convert tiff:- $0.pdf
+#}
+
+# zsh-z
+# unalias j 2> /dev/null
+# j() {
+#   [ $# -gt 0 ] && zshz 2>&1 "$*" && return
+#   cd "$(_z -l 2>&1 | fzf --height 40% --nth 2.. --reverse --inline-info +s --tac --query "${*##-* }" | sed 's/^[0-9,.]* *//')"
+# }

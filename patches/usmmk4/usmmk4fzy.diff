@@ -1,0 +1,21 @@
+--- src/tty_interface.c	2021-07-16 22:06:08.637940782 +0300
++++ src/tty_interface.c.patched	2021-07-16 22:07:29.171521327 +0300
+@@ -297,15 +297,15 @@
+ 					   {KEY_CTRL('U'), action_del_all},  /* C-U */
+ 					   {KEY_CTRL('I'), action_autocomplete}, /* TAB (C-I ) */
+ 					   {KEY_CTRL('C'), action_exit},	 /* C-C */
+-					   {KEY_CTRL('D'), action_exit},	 /* C-D */
++					   {KEY_CTRL('T'), action_exit},	 /* C-D */
+ 					   {KEY_CTRL('G'), action_exit},	 /* C-G */
+ 					   {KEY_CTRL('M'), action_emit},	 /* CR */
+ 					   {KEY_CTRL('P'), action_prev},	 /* C-P */
+ 					   {KEY_CTRL('N'), action_next},	 /* C-N */
+-					   {KEY_CTRL('K'), action_prev},	 /* C-K */
++					   {KEY_CTRL('E'), action_prev},	 /* C-K */
+ 					   {KEY_CTRL('J'), action_next},	 /* C-J */
+ 					   {KEY_CTRL('A'), action_beginning},    /* C-A */
+-					   {KEY_CTRL('E'), action_end},		 /* C-E */
++					   {KEY_CTRL('D'), action_end},		 /* C-E */
+ 
+ 					   {"\x1bOD", action_left}, /* LEFT */
+ 					   {"\x1b[D", action_left}, /* LEFT */

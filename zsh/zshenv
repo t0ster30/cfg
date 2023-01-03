@@ -1,0 +1,9 @@
+source $HOME/.config/user-dirs.dirs
+export ZSH_CACHE_DIR="$HOME/.cache/zsh"
+# export XDG_DATA_HOME="$HOME/.local/share"
+# export XDG_CONFIG_HOME="$HOME/.config"
+# export XDG_CACHE_HOME="$HOME/.cache"
+export HISTFILE="$HOME/.config/zsh"
+export TMPPREFIX="$HOME/.cache/zsh"
+export TEMP="/tmp/"
+export ZDOTDIR="$HOME/.config/zsh"

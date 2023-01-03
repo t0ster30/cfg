@@ -1,0 +1,51 @@
+#!/bin/zsh
+__shorten_path() {
+    setopt localoptions noksharrays extendedglob
+    local MATCH MBEGIN MEND
+    local -a match mbegin mend
+    "${2:-echo}" "${1//(#m)[^\/]##\//${MATCH/(#b)([^.])*/$match[1]}/}"
+}
+
+__prompt_path() {
+    local cwd
+
+    case "${PROMPT_PATH_STYLE}" in
+        "shortpath")
+            cwd="$(__shorten_path "${PWD/$HOME/~}")"
+            ;;
+        "minimal")
+            cwd="$(print -P %2~)"
+            ;;
+        *)
+            cwd=
+            ;;
+    esac
+    echo "$cwd"
+}
+
+__prompt_exitcode() {
+    echo "%(?..%B%F{red}%?%b%f)"
+}
+
+zle -N zle-line-init
+zle -N zle-line-finish
+zle -N zle-keymap-select
+
+__prompt_run() {
+    local prompt
+    prompt="%(?.λ.✘)%f"
+    echo "${prompt}"
+}
+
+prompt-enable() {
+    PROMPT='$(__prompt_run) '
+    RPROMPT='$(__prompt_exitcode)  $(__prompt_path)'
+}
+
+__prompt_main() {
+    setopt PROMPT_SUBST
+    setopt TRANSIENT_RPROMPT
+    prompt-enable
+}
+
+__prompt_main

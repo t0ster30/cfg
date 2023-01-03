@@ -1,0 +1,24 @@
+--- Makefile	2021-08-01 15:13:09.933196682 +0300
++++ Makefile.patched	2021-08-01 15:46:10.030755487 +0300
+@@ -31,7 +31,7 @@
+ fzy: $(OBJECTS)
+ 	$(CC) $(CFLAGS) $(CCFLAGS) -o $@ $(OBJECTS) $(LIBS)
+ 
+-%.o: %.c config.h
++%.o: %.c config.h %.d
+ 	$(CC) $(CPPFLAGS) $(CFLAGS) -c -o $@ $<
+ 
+ config.h: src/config.def.h
+@@ -54,6 +54,12 @@
+ veryclean: clean
+ 	rm -f config.h
+ 
++# create a list of auto dependencies
++AUTODEPS:= $(patsubst %.o,%.d, $(OBJECTS)) $(patsubst %.o,%.d, $(THEFTDEPS))
++
++# include by auto dependencies
++-include $(AUTODEPS)
++
+ .PHONY: test check all clean veryclean install fmt acceptance
+ 
+ -include $(OBJECTS:.o=.d)

@@ -1,0 +1,26 @@
+--- Makefile	2021-08-02 16:33:06.562250419 +0300
++++ Makefile.patched	2021-09-03 23:12:33.191833877 +0300
+@@ -45,6 +45,10 @@
+ 	cp fzy.1 $(DESTDIR)$(MANDIR)/man1/
+ 	chmod 644 ${DESTDIR}${MANDIR}/man1/fzy.1
+ 
++uninstall:
++	rm $(DESTDIR)$(BINDIR)/fzy
++	rm $(DESTDIR)$(MANDIR)/man1/fzy.1
++
+ fmt:
+ 	clang-format -i src/*.c src/*.h
+ 
+--- src/tty.c	2021-08-02 16:35:31.201885502 +0300
++++ src/tty.c.patched	2021-09-03 23:16:27.769589272 +0300
+@@ -74,7 +74,9 @@
+ 
+ void tty_getwinsz(tty_t *tty) {
+ 	struct winsize ws;
+-	if (ioctl(fileno(tty->fout), TIOCGWINSZ, &ws) == -1) {
++	if (ioctl(fileno(tty->fout), TIOCGWINSZ, &ws) == -1
++	    || ws.ws_col == 0
++	    || ws.ws_row == 0) {
+ 		tty->maxwidth = 80;
+ 		tty->maxheight = 25;
+ 	} else {

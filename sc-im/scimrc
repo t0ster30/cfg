@@ -1,0 +1,12 @@
+set autocalc
+set numeric
+set xlsx_readformulas
+set numeric_decimal=0
+set truncate
+nnoremap "k" "e"
+nnoremap "e" "k"
+nnoremap "K" "E"
+nnoremap "E" "K"
+nnoremap "i" "e"
+nnoremap "I" "E"
+nnoremap "q" ":q"

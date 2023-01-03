@@ -1,0 +1,197 @@
+--- src/nnn.h	2021-07-15 23:50:05.588087693 +0300
++++ src/nnn.h.patched	2021-07-15 23:52:35.920194555 +0300
+@@ -138,14 +138,14 @@
+ 	{ 'j',            SEL_NEXT },
+ 	{ KEY_DOWN,       SEL_NEXT },
+ 	/* Previous */
+-	{ 'k',            SEL_PREV },
++	{ 'e',            SEL_PREV },
+ 	{ KEY_UP,         SEL_PREV },
+ 	/* Page down */
+ 	{ KEY_NPAGE,      SEL_PGDN },
+ 	/* Page up */
+ 	{ KEY_PPAGE,      SEL_PGUP },
+ 	/* Ctrl+D */
+-	{ CONTROL('D'),   SEL_CTRL_D },
++	{ CONTROL('T'),   SEL_CTRL_D },
+ 	/* Ctrl+U */
+ 	{ CONTROL('U'),   SEL_CTRL_U },
+ 	/* First entry */
+@@ -155,7 +155,7 @@
+ 	/* Last entry */
+ 	{ KEY_END,        SEL_END },
+ 	{ 'G',            SEL_END },
+-	{ CONTROL('E'),   SEL_END },
++	{ CONTROL('D'),   SEL_END },
+ 	/* Go to first file */
+ 	{ '\'',           SEL_FIRST },
+ 	/* HOME */
+@@ -195,7 +195,7 @@
+ 	/* Toggle hide .dot files */
+ 	{ '.',            SEL_HIDDEN },
+ 	/* Detailed listing */
+-	{ 'd',            SEL_DETAIL },
++	{ 't',            SEL_DETAIL },
+ 	/* File details */
+ 	{ 'f',            SEL_STATS },
+ 	{ CONTROL('F'),   SEL_STATS },
+@@ -204,8 +204,8 @@
+ 	/* Create archive */
+ 	{ 'z',            SEL_ARCHIVE },
+ 	/* Sort toggles */
+-	{ 't',            SEL_SORT },
+-	{ CONTROL('T'),   SEL_SORT },
++	{ 'k',            SEL_SORT },
++	{ CONTROL('K'),   SEL_SORT },
+ 	/* Redraw window */
+ 	{ CONTROL('L'),   SEL_REDRAW },
+ 	/* Select current file path */
+@@ -218,7 +218,7 @@
+ 	/* Invert selection in current dir */
+ 	{ 'A',            SEL_SELINV },
+ 	/* List, edit selection */
+-	{ 'E',            SEL_SELEDIT },
++	{ 'D',            SEL_SELEDIT },
+ 	/* Copy from selection buffer */
+ 	{ 'p',            SEL_CP },
+ 	{ CONTROL('P'),   SEL_CP },
+@@ -247,7 +247,7 @@
+ 	/* Quit a context */
+ 	{ '+',            SEL_AUTONEXT },
+ 	/* Edit in EDITOR */
+-	{ 'e',            SEL_EDIT },
++	{ 'd',            SEL_EDIT },
+ 	/* Run a plugin */
+ 	{ ';',            SEL_PLUGIN },
+ 	/* Run command */
+@@ -264,7 +264,7 @@
+ 	/* Export list */
+ 	{ '>',            SEL_EXPORT },
+ 	/* Set time type */
+-	{ 'T',            SEL_TIMETYPE },
++	{ 'K',            SEL_TIMETYPE },
+ 	/* Quit a context */
+ 	{ 'q',            SEL_QUITCTX },
+ 	/* Change dir on quit */
+--- src/nnn.c	2021-07-16 22:29:33.996753967 +0300
++++ src/nnn.c.patched	2021-07-16 22:33:46.954588769 +0300
+@@ -5571,7 +5571,7 @@
+ 			r = 'a';
+ 		} else if (cfg.blkorder) {
+ 			cfg.blkorder = 0;
+-			r = 'd';
++			r = 't';
+ 		}
+ 
+ 		if (cfg.version)
+@@ -5586,7 +5586,7 @@
+ 		else if (cfg.sizeorder)
+ 			r = 'c';
+ 		else
+-			r = 't';
++			r = 'k';
+ 	}
+ 
+ 	switch (r) {
+@@ -5598,7 +5598,7 @@
+ 		} else
+ 			cfg.blkorder = 0;
+ 		// fallthrough
+-	case 'd': /* Disk usage */
++	case 't': /* Disk usage */
+ 		if (r == 'd') {
+ 			if (!cfg.apparentsz)
+ 				cfg.blkorder ^= 1;
+@@ -5628,7 +5628,7 @@
+ 		entrycmpfn = &entrycmp;
+ 		namecmpfn = &xstricmp;
+ 		break;
+-	case 'e': /* File extension */
++	case 'd': /* File extension */
+ 		cfg.extnorder ^= 1;
+ 		cfg.sizeorder = 0;
+ 		cfg.timeorder = 0;
+@@ -5650,7 +5650,7 @@
+ 		cfg.reverse = 0;
+ 		entrycmpfn = &entrycmp;
+ 		break;
+-	case 't': /* Time */
++	case 'k': /* Time */
+ 		cfg.timeorder ^= 1;
+ 		cfg.sizeorder = 0;
+ 		cfg.apparentsz = 0;
+--- src/nnn.c	2021-07-16 22:44:38.428855413 +0300
++++ src/nnn.c.patched	2021-07-16 22:43:37.731208421 +0300
+@@ -3166,7 +3166,7 @@
+ 			case '\n': // fallthrough
+ 			case '\r':
+ 				goto END;
+-			case CONTROL('D'):
++			case CONTROL('T'):
+ 				if (pos < len)
+ 					++pos;
+ 				else if (!(pos || len)) { /* Exit on ^D at empty prompt */
+@@ -3202,7 +3202,7 @@
+ 					--pos, --len;
+ 				} while (buf[pos - 1] != ' ' && buf[pos - 1] != '/'); // NOLINT
+ 				continue;
+-			case CONTROL('K'):
++			case CONTROL('E'):
+ 				printmsg(prompt);
+ 				len = pos;
+ 				continue;
+@@ -3213,7 +3213,7 @@
+ 			case CONTROL('A'):
+ 				pos = 0;
+ 				continue;
+-			case CONTROL('E'):
++			case CONTROL('D'):
+ 				pos = len;
+ 				continue;
+ 			case CONTROL('U'):
+@@ -5579,7 +5579,7 @@
+ 
+ 		if (cfg.reverse)
+ 			entrycmpfn = &reventrycmp;
+-	} else if (r == CONTROL('T')) {
++	} else if (r == CONTROL('K')) {
+ 		/* Cycling order: clear -> size -> time -> clear */
+ 		if (cfg.timeorder)
+ 			r = 's';
+--- src/nnn.h	2021-07-22 23:19:37.526927036 +0300
++++ src/nnn.h.patched	2021-08-01 22:30:21.561064139 +0300
+@@ -133,9 +133,9 @@
+ 	{ '\r',           SEL_OPEN },
+ 	/* Pure navigate inside */
+ 	{ KEY_RIGHT,      SEL_NAV_IN },
+-	{ 'l',            SEL_NAV_IN },
++	{ 'o',            SEL_NAV_IN },
+ 	/* Next */
+-	{ 'j',            SEL_NEXT },
++	{ 'n',            SEL_NEXT },
+ 	{ KEY_DOWN,       SEL_NEXT },
+ 	/* Previous */
+ 	{ 'e',            SEL_PREV },
+@@ -207,7 +207,7 @@
+ 	{ 'k',            SEL_SORT },
+ 	{ CONTROL('K'),   SEL_SORT },
+ 	/* Redraw window */
+-	{ CONTROL('L'),   SEL_REDRAW },
++	{ CONTROL('O'),   SEL_REDRAW },
+ 	/* Select current file path */
+ 	{ CONTROL('J'),   SEL_SEL },
+ 	{ ' ',            SEL_SEL },
+@@ -232,10 +232,10 @@
+ 	{ 'x',            SEL_RM },
+ 	{ CONTROL('X'),   SEL_RM },
+ 	/* Open in a custom application */
+-	{ 'o',            SEL_OPENWITH },
+-	{ CONTROL('O'),   SEL_OPENWITH },
++	{ 'l',            SEL_OPENWITH },
++	{ CONTROL('L'),   SEL_OPENWITH },
+ 	/* Create a new file */
+-	{ 'n',            SEL_NEW },
++	{ 'j',            SEL_NEW },
+ 	/* Show rename prompt */
+ 	{ CONTROL('R'),   SEL_RENAME },
+ 	/* Rename contents of current dir */

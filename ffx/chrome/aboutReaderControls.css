@@ -1,0 +1,21 @@
+#moz-reader-content {
+    text-align: justify;
+}
+body.sans-serif {
+    font-family: "PT Sans";
+}
+body.serif {
+    font-family: "Spectral-Regular";
+}
+body.light {
+    color: #1a2030;
+    background-color: #f9f6f0;
+}
+body.dark {
+    color: #cccccc;
+    background-color: #333333;
+}
+body.sepia {
+    color: #6e4400;
+    background-color: #e8d2af;
+}

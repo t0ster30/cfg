@@ -1,0 +1,388 @@
+/* @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); */
+@media (max-width: 1100px) {
+	hbox[anonid="findbar-textbox-wrapper"] {
+		position: relative;
+		right: 0;
+		transform: none;
+	}
+	.findbar-find-status, .found-matches {
+		order: 0;
+	}
+}
+
+#TabsToolbar:not([customizing="true"]) {
+  visibility: collapse !important;
+}
+#back-button, #forward-button { display:none!important; }
+
+
+#tabbrowser-tabs {
+    visibility: collapse !important;
+}
+
+/*#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] {*/
+/*    overflow: hidden;*/
+/*    min-width: 38px;*/
+/*    max-width: 38px;*/
+/*    position: fixed;*/
+/*    top: 36px;*/
+/*    transition: all 0.2s ease;*/
+/*    border-right: 1px solid #0c0c0d;*/
+/*    z-index: 2;*/
+/*}*/
+
+/*#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"]:hover,*/
+/*#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] #sidebar {*/
+/*    min-width: 300px !important;*/
+/*    max-width: 300px !important;*/
+/*}*/
+
+/*#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] #sidebar-header, #sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] ~ #sidebar-splitter {*/
+/*    display: none;*/
+/*}*/
+
+/*#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] #sidebar-header {*/
+/*    background-color: #31363b;*/
+/*    border-bottom: none;*/
+/*}*/
+
+/*/**/
+/* * ADJUST!*/
+/* * You need to subtract the height of the panels above sidebar: nav bar,*/
+/* * bokmarks bar, sidebar header, etc. -- whichever you have enabled.*/
+/* **/ 
+/* * 36px subtracted below is the height of the nav bar with default theme.*/
+/* * I don't have bookmarks bar enabled, and sidebar header is hidden with*/
+/* * CSS above, so this is all I need to do.*/
+/* */*/
+/*#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] #sidebar {*/
+/*    height: calc(100vh - 36px);*/ 
+/*}*/
+
+/*#sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"]:not([hidden="true"]) ~ #sidebar-splitter ~ #appcontent {*/
+/*    margin-left: 0px;*/
+/*}*/
+
+/*#main-window[inFullscreen] #appcontent {*/
+/*    margin-left: 0 !important;*/
+/*}*/
+
+/*#main-window[privatebrowsingmode="temporary"] #TabsToolbar, #main-window[inFullscreen] #TabsToolbar {*/
+/*    background-color: #11161b;*/
+/*}*/
+/*#main-window[privatebrowsingmode="temporary"] #tabbrowser-tabs, #main-window[inFullscreen] #tabbrowser-tabs {*/
+/*    visibility: visible !important;*/
+/*}*/
+/*#main-window[inFullscreen][inDOMFullscreen] #tabbrowser-tabs {*/
+/*    visibility: collapse !important;*/
+/*}*/
+/*#main-window[inFullscreen] #sidebar-box[sidebarcommand="tabcenter-reborn_ariasuni-sidebar-action"] {*/
+/*    display: none !important;*/
+/*}*/
+
+/*#nav-bar-customization-target {*/
+/*    margin: 0px 2px;*/
+/*}*/
+
+/*#window-controls {*/
+/*    filter: invert(75%);*/
+/*}*/
+/*#nav-bar toolbarpaletteitem[id^="wrapper-customizableui-special-spring"], #nav-bar toolbarspring {*/
+/*    -moz-box-flex: 1 !important;*/
+/*}*/
+/*.findbar-button:hover {*/
+/*    color: #ddd !important;*/
+/*}*/
+/*.findbar-button[checked="true"]:not(:hover) {*/
+/*    color: white !important;*/
+/*}*/
+/*:root[uidensity="compact"] #nav-bar[brighttext] > #PanelUI-button {*/
+/*    border-image-source: linear-gradient(transparent 4px, rgba(100%,100%,100%,.2) 4px, rgba(100%,100%,100%,.2) calc(100% - 4px), transparent calc(100% - 4px));*/
+/*}*/
+
+/*#tablist {*/
+/*  scrollbar-width: none;*/
+/*}*/
+/*#tablist:hover {*/
+/*  scrollbar-width: auto;*/
+/*}*/
+
+
+#main-window[titlepreface^="[1] "] #sidebar-box {
+  visibility: collapse;
+}
+
+
+#sidebar-box {
+    overflow: hidden;
+    min-width: 38px;
+    max-width: 38px;
+    position: fixed;
+    top: 36px;
+    transition: all 0.2s ease;
+    border-right: 1px solid #0c0c0d;
+    z-index: 2;
+}
+
+#sidebar-box:hover,
+#sidebar-box #sidebar {
+    min-width: 300px !important;
+    max-width: 300px !important;
+}
+
+#sidebar-box #sidebar-header, #sidebar-box ~ #sidebar-splitter {
+    display: none;
+}
+
+#sidebar-box #sidebar-header {
+    background-color: #31363b;
+    border-bottom: none;
+}
+
+/*
+ * ADJUST!
+ * You need to subtract the height of the panels above sidebar: nav bar,
+ * bokmarks bar, sidebar header, etc. -- whichever you have enabled.
+ * 
+ * 36px subtracted below is the height of the nav bar with default theme.
+ * I don't have bookmarks bar enabled, and sidebar header is hidden with
+ * CSS above, so this is all I need to do.
+ */
+#sidebar-box #sidebar {
+    height: calc(100vh - 36px); 
+}
+
+#sidebar-box:not([hidden="true"]) ~ #sidebar-splitter ~ #appcontent {
+    margin-left: 0px;
+}
+
+#main-window[inFullscreen] #appcontent {
+    margin-left: 0 !important;
+}
+
+#main-window[privatebrowsingmode="temporary"] #TabsToolbar, #main-window[inFullscreen] #TabsToolbar {
+    background-color: #11161b;
+}
+#main-window[privatebrowsingmode="temporary"] #tabbrowser-tabs, #main-window[inFullscreen] #tabbrowser-tabs {
+    visibility: visible !important;
+}
+#main-window[inFullscreen][inDOMFullscreen] #tabbrowser-tabs {
+    visibility: collapse !important;
+}
+#main-window[inFullscreen] #sidebar-box {
+    display: none !important;
+}
+
+#nav-bar-customization-target {
+    margin: 0px 2px;
+}
+
+#window-controls {
+    filter: invert(75%);
+}
+#nav-bar toolbarpaletteitem[id^="wrapper-customizableui-special-spring"], #nav-bar toolbarspring {
+    -moz-box-flex: 1 !important;
+}
+.findbar-button:hover {
+    color: #ddd !important;
+}
+.findbar-button[checked="true"]:not(:hover) {
+    color: white !important;
+}
+:root[uidensity="compact"] #nav-bar[brighttext] > #PanelUI-button {
+    border-image-source: linear-gradient(transparent 4px, rgba(100%,100%,100%,.2) 4px, rgba(100%,100%,100%,.2) calc(100% - 4px), transparent calc(100% - 4px));
+}
+
+#tablist {
+  scrollbar-width: none;
+}
+#tablist:hover {
+  scrollbar-width: auto;
+}
+
+
+#main-window[titlepreface^="[1] "] #sidebar-box {
+  visibility: collapse;
+}
+
+
+/*Centers text in URL bar when it is not focused*/
+/*urlbar:not([focused]) .urlbar-input-box { text-align: center;}*/
+
+
+/*urlbar {text-align: center;}*/
+
+
+/*#content browser{margin-right:-14px!important;overflow-y:scroll;overflow-x:hidden;}*/
+
+
+/*#navigator-toolbox {
+    height: 0px !important;
+    min-height: 0px !important;
+    overflow: hidden !important;
+}*/
+
+/*#navigator-toolbox:focus,
+#navigator-toolbox:focus-within,
+#navigator-toolbox:active {
+    height: auto !important;
+}*/
+
+#navigator-toolbox:not(:focus-within):not(:hover) {
+    margin-top: -41px;
+  }
+  #navigator-toolbox:hover:not(:focus-within)
+  {
+	margin-top: -41px;
+  }
+  #navigator-toolbox {
+    transition: 0.2s margin-top ease-out;
+  }
+
+
+
+/* ==UserStyle==
+@name         Hide dickbars
+@description  Hides “dickbars”, i.e. annoying CTAs and floating bars in several websites.
+@author       Heracles Papatheodorou <email@heracl.es> (https://heracl.es)
+@namespace    https://heracl.es
+@homepageURL  https://github.com/Arty2/userstyles
+@updateURL    https://raw.githubusercontent.com/Arty2/userstyles/master/_hide-dickbars.user.css
+@supportURL   https://github.com/Arty2/userstyles/issues
+@version      0.1.7
+@license      MIT License
+==/UserStyle== */
+
+
+@-moz-document domain("facebook.com") {
+	/* ==========================================================================
+	Hide login CTA on facebook profiles
+	========================================================================== */
+	#pagelet_growth_expanding_cta {
+		display: none !important;
+	}
+}
+
+@-moz-document domain("instagram.com") {
+	/* ==========================================================================
+	Hide bottom CTA on instagram profiles
+	========================================================================== */
+	/* trialing rule, may be too aggressive */
+	div[style="width: 100%;"] {
+		display: none !important;
+	}
+
+	/* ==========================================================================
+	Hide login CTA on instagram profiles
+	========================================================================== */
+	body {
+		overflow: auto !important;
+	}
+
+	/* trialing rule, may be too aggressive */
+	div[role="presentation"] {
+		display: none !important;
+	}
+}
+
+@-moz-document domain("twitter.com") {
+	/* ==========================================================================
+	Hide bottom CTA on twitter profiles
+	========================================================================== */
+	#layers {
+		/*display: none !important;*/
+	}
+}
+
+
+@-moz-document domain("newyorker.com") {
+	/* ==========================================================================
+	Hide bottom CTA
+	========================================================================== */
+	.paywall-bar__wrapper,
+	.unit-overlay,
+	#signInContainer {
+		display: none !important;
+	}
+}
+
+@-moz-document domain("nytimes.com") {
+	/* ==========================================================================
+	Hide paywall and CTA
+	========================================================================== */
+	#app > div:first-child > div:first-child {
+		overflow: scroll !important;
+	}
+
+	#app > div:first-child > div > div:last-child,
+	#gateway-content {
+		display: none;
+	}
+}
+
+@-moz-document domain("wired.com") {
+	/* ==========================================================================
+	Hide paywall and CTA
+	========================================================================== */
+	.paywall-bar {
+		display: none !important;
+	}
+}
+
+
+/* alternative: move the toolbar to the bottom; */
+/* #appMenu-viewCache + box {
+	-moz-box-ordinal-group: 2 !important;
+} */
+
+input {
+  border: 2px inset white;
+  background-color: white;
+  color: black;
+  -moz-appearance: none !important;
+}
+
+textarea {
+  border: 2px inset white;
+  background-color: white;
+  color: black;
+  -moz-appearance: none !important;
+}
+
+select {
+  border: 2px inset white;
+  background-color: white;
+  color: black;
+  -moz-appearance: none !important;
+}
+
+input[type="radio"],
+input[type="checkbox"] {
+  border: 2px inset white !important;
+  background-color: white !important;
+  color: ThreeDFace !important;
+  -moz-appearance: none !important;
+}
+
+*|*::-moz-radio {
+  background-color: white;
+  -moz-appearance: none !important;
+}
+
+button,
+input[type="reset"],
+input[type="button"],
+input[type="submit"] {
+  border: 2px outset white;
+  background-color: #eee;
+  color: black;
+  -moz-appearance: none !important;
+}
+
+body {
+  background-color: white;
+  color: black;
+  display: block;
+  margin: 8px;
+  -moz-appearance: none !important;
+}
