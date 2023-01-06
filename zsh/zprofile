@@ -2,12 +2,11 @@ export h="$HOME"
 export XDG_CONFIG_HOME="$h/.config"
 export XDG_DATA_HOME="$h/.local/share"
 export XDG_BIN_HOME="$h/bin"
-export PLAN9="/usr/local/p9p"
-export plan9=$PLAN9
+export plan9="/usr/local/p9p"
 export LD_LIBRARY_PATH=/usr/local/lib
 export GOPATH="$h/go"
-export PATH="$XDG_BIN_HOME:$XDG_BIN_HOME/android-studio/bin:$XDG_BIN_HOME/ma:$GOPATH/bin:$h/.cargo/bin:$h/.local/kitty.app:$h/.scripts:$h/.fzf/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin:/usr/local/bin/el:/usr/local/games:/opt/libjpeg-turbo/bin:/snap/bin:/usr/lib/ncurses/examples:$PLAN9/bin"
-export MANPATH="/usr/share/man:/usr/local/share/man:$h/man:$XDG_DOCUMENTS_HOME/roff/share/man:$PLAN9/man"
+export PATH="$XDG_BIN_HOME:$XDG_BIN_HOME/android-studio/bin:$h/ma:$GOPATH/bin:$h/.cargo/bin:$h/.local/kitty.app:$h/.scripts:$h/.fzf/bin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/games:/usr/local/sbin:/usr/local/bin/el:/usr/local/games:/opt/libjpeg-turbo/bin:/snap/bin:/usr/lib/ncurses/examples:$plan9/bin"
+export MANPATH="/usr/share/man:/usr/local/share/man:$h/man:$XDG_DOCUMENTS_HOME/roff/share/man:$plan9/man"
 # $h/pebble-dev/pebble-sdk-4.5-linux64/bin:$h/dex2jar-2.0:
 export roff="$h/doc/roff"
 export GROFF="/usr/local/share/groff"
