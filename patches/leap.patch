@@ -1,0 +1,152 @@
+diff --git a/te.c b/te.c
+index 17430e2..081d0fb 100644
+--- a/te.c
++++ b/te.c
+@@ -826,7 +826,7 @@ minibuffer_read(View *view, const char *prompt, const char *prefill)
+ 			}
+ 			break;
+ 		case CTRL('g'):
+-			alert("Quit");
++			alert("quit");
+ 			return 0;
+ 		default:
+ 			if (0x20 <= ch && ch < 0x7f) {
+@@ -867,7 +867,7 @@ yes_or_no_p(View *view, const char *question)
+ 			return 0;
+ 		if (strcasecmp(answer, "yes") == 0)
+ 			return 1;
+-		alert("Please answer yes or no.");
++		alert("please answer yes or no.");
+ 		view_render(view);
+ 		sleep(1);
+ 	}
+@@ -879,7 +879,7 @@ void
+ want_quit(View *view) {
+ 	if (text_modified(view->buf->text)) {
+ 		if (yes_or_no_p(view,
+-		    "Modified buffers exist; really exit? (yes or no)"))
++		    "modified buffers exist; really exit? (yes or no)"))
+ 			quit = 1;
+ 	} else {
+ 		quit = 1;
+@@ -1469,7 +1469,7 @@ isearch(View *view, int dir)
+ 		move(view->lines - 1, 0);
+ 		clrtoeol();
+ 		printw("%s%s: %s",
+-		    failed ? "Failing I-search" : "I-search",
++		    failed ? "failing incsearch" : "incsearch",
+ 		    dir == +1 ? "" : " backward",
+ 		    term);
+ 
+@@ -1479,10 +1479,26 @@ isearch(View *view, int dir)
+ 		int ch = getch();
+ 		switch (ch) {
+ 		case CTRL('g'):
+-			alert("Quit");
++			alert("quit");
+ 			buf->point = text_mark_set(buf->text, point);
+ 			buf->match_start = buf->match_end = 0;
+ 			return;
++/*		case KEY_MOUSE:
++		{
++			int chm = getch();
++			switch(chm)
++			case (BUTTON1_PRESSED):
++				dir = +1;
++				if (buf->match_end)
++					search_point = buf->match_end + 1;
++				break;
++			case (BUTTON2_PRESSED):
++				dir = -1;
++				if (buf->match_end)
++					search_point = buf->match_end - 1;
++				break;
++		}
++		break;*/
+ 		case CTRL('s'):
+ 			dir = +1;
+ 			if (buf->match_end)
+@@ -1511,7 +1527,7 @@ isearch(View *view, int dir)
+ 				term[l+1] = 0;
+ 			} else if (ch > 0) {
+ 				buf->mark = text_mark_set(buf->text, initial_point);
+-				message("Mark saved where search started");
++				message("marked where search started");
+ 				buf->match_start = buf->match_end = 0;
+ 
+ 				if (ch >= 0x80)
+@@ -1564,7 +1580,7 @@ shell_command(View *view)
+ 	static char last_command[1024];
+ 	static char command_line[1024];
+ 
+-	char *answer = minibuffer_read(view, "Run:", last_command);
++	char *answer = minibuffer_read(view, "run:", last_command);
+ 	if (!answer)
+ 		return;
+ 	if (*answer)
+@@ -1591,7 +1607,7 @@ shell_command(View *view)
+ 
+ 	if (status > 0)
+ 		fprintf(stderr, "\nshell returned %d\n", WEXITSTATUS(status));
+-	fprintf(stderr, "\nPress ENTER or type command to continue");
++	fprintf(stderr, "\npress ENTER or type command to continue");
+ 
+ 	raw();
+ 	int ch = getch();
+@@ -1617,9 +1633,9 @@ main(int argc, char *argv[])
+ 	if (!text) {
+ 		text = text_load(0);
+ 		if (errno == ENOENT)
+-			message("(New file)");
++			message("(new file)");
+ 		else
+-			alert("Error opening %s: %s", file, strerror(errno));
++			alert("error opening %s: %s", file, strerror(errno));
+ 	}
+ 	Buffer *buf = malloc (sizeof *buf);
+ 	View *view = malloc (sizeof *view);
+@@ -1664,6 +1680,8 @@ main(int argc, char *argv[])
+ 		view->buf->match_start = view->buf->match_end = 0;
+ 
+ 		ch = getch();
++		mousemask(BUTTON1_PRESSED | BUTTON1_RELEASED | BUTTON3_PRESSED | BUTTON3_RELEASED, NULL);
++		MEVENT event;
+ 		switch (ch) {
+ 		case CTRL(' '):
+ 			set_mark(view->buf);
+@@ -1690,7 +1708,7 @@ main(int argc, char *argv[])
+ 			move_char(view->buf, +1);
+ 			break;
+ 		case CTRL('g'):
+-			alert("Quit");
++			alert("quit");
+ 			break;
+ 		case CTRL('i'):
+ 			magic_tab(view->buf);
+@@ -1726,6 +1744,17 @@ main(int argc, char *argv[])
+ 		case CTRL('s'):
+ 			isearch(view, +1);
+ 			break;
++		case KEY_MOUSE:
++			if(getmouse(&event) == OK){
++			if (event.bstate & BUTTON1_PRESSED){
++				isearch(view, -1);
++				break;
++			}
++			if (event.bstate & BUTTON3_PRESSED){
++				isearch(view, +1);
++				break;
++			}}
++			break;
+ 		case CTRL('t'):
+ 			transpose_chars(view->buf);
+ 			break;
+@@ -1818,7 +1847,7 @@ main(int argc, char *argv[])
+ 					move_paragraph(view->buf, +1);
+ 					break;
+ 				case CTRL('g'):
+-					alert("Quit");
++					alert("quit");
+ 					break;
+ 				case CTRL('r'):
+ 					re_search_backward(view);

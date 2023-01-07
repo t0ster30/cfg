@@ -16,5 +16,7 @@ user_pref("font.name.sans-serif.x-western", "PT Sans Expert");
 user_pref("reader.color_scheme", "light");
 user_pref("toolkit.telemetry.reportingpolicy.firstRun", false);
 user_pref("sidebar.position_start", true);
+user_pref("browser.theme.colorway-closet", true);
+user_pref("browser.theme.retainedExpiredThemes", "elemental-soft-colorway@mozilla.org");
 /*user_pref("ui.osk.enabled", false);*/
 /*user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);*/
