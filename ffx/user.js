@@ -17,6 +17,9 @@ user_pref("reader.color_scheme", "light");
 user_pref("toolkit.telemetry.reportingpolicy.firstRun", false);
 user_pref("sidebar.position_start", true);
 user_pref("browser.theme.colorway-closet", true);
-user_pref("browser.theme.retainedExpiredThemes", "elemental-soft-colorway@mozilla.org");
+user_pref("browser.theme.retainedExpiredThemes", "[\"elemental-soft-colorway@mozilla.org\", \"innovator-soft-colorway@mozilla.org\"]");
+user_pref("network.standard-url.escape-utf8", false);
+user_pref("browser.theme.toolbar-theme", 1);
+user_pref("browser.urlbar.decodeURLsOnCopy", true);
 /*user_pref("ui.osk.enabled", false);*/
 /*user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);*/

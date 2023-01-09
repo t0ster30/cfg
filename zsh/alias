@@ -35,7 +35,6 @@ alias sc=sc-im
 alias svi=vis
 alias tg=telegram-cli
 alias v="$EDITOR"
-
 alias icat='kitty +kitten icat --align=left'
 alias f='pushd +"$(dirs -v | fzy | cut -f1)"'
 #alias gp='fd -t f | fzf | wl-copy -n'

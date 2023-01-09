@@ -448,6 +448,7 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3 # core
 *.tbz                 38;5;40             # Archives
 *.tgz                 38;5;40             # Archives
 *.txz                 38;5;40             # Archives
+*.tzs                 38;5;40             # Archives
 *.warc                38;5;40             # Archives
 *.WARC                38;5;40             # Archives
 *.xz                  38;5;40             # Archives
