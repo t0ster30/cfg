@@ -20,10 +20,12 @@ alias h="cd $h"
 alias j=pushd
 alias get='curl -O'
 alias gz=gzip
+alias mpv='mpv --really-quiet --input-ipc-server=/tmp/mpv.sock'
 alias mv='mv -iv'
 alias nq='nq -c'
 #alias o=xdg-open
 alias open=mimi
+alias o=open
 alias p=pass
 # please, please do not alias the rm. 
 # not-so-smart people use it in scripts.
@@ -36,7 +38,7 @@ alias svi=vis
 alias tg=telegram-cli
 alias v="$EDITOR"
 alias icat='kitty +kitten icat --align=left'
-alias f='pushd +"$(dirs -v | fzy | cut -f1)"'
+#alias f='pushd +"$(dirs -v | fzy | cut -f1)"'
 #alias gp='fd -t f | fzf | wl-copy -n'
 alias 2th="2th $h/.local/share/events"
 alias bar='kitty @ launch --type=os-window --keep-focus termbar && kitty @ resize-os-window --match title:termbar --width 15 --height 2'

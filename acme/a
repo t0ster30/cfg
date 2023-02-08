@@ -1,0 +1,21 @@
+#!/usr/local/bin/el/execlineb -P
+# Acme startup script
+importas h HOME
+
+define plan9 /usr/local/p9p
+define shell $plan9/bin/rc
+define PAGER nobs
+define TERM dumb
+#FONT=Menlo-Regular/12a # GoRegular/11a # IBMPlexSans/11a
+#MFONT=GoMono/11a # IBMPlexMono/11a
+define -s manpath /usr/local/p9p/man:/usr/share/man:/usr/local/share/man:$h/.local/share/man
+
+define acmeshell $shell
+#font=/mnt/font/$FONT/font
+
+ifelse -n { pgrep plumber } plumber &
+9p write plumb/rules < $h/lib/plumbing
+#pgrep fontsrv > /dev/null || fontsrv &
+#pgrep m9u > /dev/null || m9u & # switched to mpd
+
+if -n { pgrep acme } 9 acme

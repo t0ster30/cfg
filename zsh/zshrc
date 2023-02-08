@@ -15,7 +15,7 @@ zsh-mime-setup
 HISTSIZE=100000000000
 SAVEHIST=100000000000
 HISTFILE="$XDG_DATA_HOME/zsh/history"
-setopt autocd auto_continue share_history inc_append_history hist_ignore_space hist_find_no_dups correctall hash_cmds hash_dirs pushd_silent
+setopt autocd auto_continue share_history inc_append_history hist_ignore_space hist_find_no_dups correctall hash_cmds hash_dirs pushd_silent hist_reduce_blanks hist_ignore_dups hist_save_no_dups
 
 stty -ixon # Disable ctrl-s and ctrl-q for pausing shell
 
@@ -169,3 +169,4 @@ abiword () {
 cm () {
 	mkdir $1 &&	cd $1
 }
+f () {pushd +"$(dirs -v | fzy | cut -f1)"}
