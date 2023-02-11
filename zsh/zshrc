@@ -170,3 +170,4 @@ cm () {
 	mkdir $1 &&	cd $1
 }
 f () {pushd +"$(dirs -v | fzy | cut -f1)"}
+gitc (){git commit -am "$@"}

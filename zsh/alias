@@ -66,7 +66,6 @@ alias dtop="kitty @ launch --type=os-window --keep-focus top && kitty @ resize-o
 alias vi="$XDG_BIN_HOME/vi"
 
 # acme
-alias a="$XDG_BIN_HOME/a &"
 alias acme="acme &"
 alias win="9 win"
 # alias dt="vi $(find -type f | fzy)"
