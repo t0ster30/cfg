@@ -2,6 +2,7 @@
 # Acme startup script
 importas h HOME
 importas u USER
+importas r roff
 
 define plan9 /usr/local/p9p
 define shell ${plan9}/bin/rc
@@ -12,6 +13,8 @@ define acmeshell ${shell}
 
 #if { $1 = -n } { define NAMESPACE=/tmp/ns.$u.$2 mkdir -p $NAMESPACE }
 
-ifelse -n { pgrep acme } background { 9 acme }
-ifelse -n { pgrep plumber } background { plumber }
-pipeline { cat ${h}/lib/plumbing } 9p write plumb/rules
+# needs thorough checking
+ifelse -n { pgrep fonsrv } { background { fontsrv } } {
+ifelse -n { pgrep acme } { background { 9 acme } }
+{ ifelse -n { pgrep plumber } { background { plumber } }
+pipeline { cat ${h}/lib/plumbing } 9p write plumb/rules } }
