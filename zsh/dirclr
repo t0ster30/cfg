@@ -124,6 +124,9 @@ STICKY_OTHER_WRITABLE 48;5;235;38;5;139;3 # core
 .cbz                  38;5;141            # Documents # binary
 .chm                  38;5;141            # Documents # binary
 .djvu                 38;5;141            # Documents # binary
+.DJVU                 38;5;141            # Documents # binary
+.djv                  38;5;141            # Documents # binary
+.DJV                  38;5;141            # Documents # binary
 .pdf                  38;5;141            # Documents # binary
 .PDF                  38;5;141            # Documents # binary
 .mobi                 38;5;141            # Documents # binary

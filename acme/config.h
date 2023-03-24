@@ -16,7 +16,8 @@ char *fontnames[2] = {
 	/* "/lib/font/bit/profont/profont-12.font", */
 	/* "/lib/font/bit/mntcarlo/mntcarlo.font" */
 	"/mnt/font/IBMPlexSans/14a/font",
-	"/mnt/font/FiraCodeNerdFontComplete-Retina/14a/font"
+	"/mnt/font/GoMono/13a/font"
+	/*"/mnt/font/FiraCodeNerdFontComplete-Retina/14a/font"*/
 	/* "/mnt/font/PTSans-Regular/12a/font", */
 	/* "/mnt/font/Writer-Regular/11a/font" */
 };
@@ -28,14 +29,14 @@ char *fontnames[2] = {
  *  comes highly suggested.
  */
 
-int globalautoindent	= TRUE;
+int globalautoindent    = TRUE;
 
 /*
  *  swapping scroll buttons makes B1 scroll down
  *  instead of up and B2 up instead of down
  */
 
-int	swapscrollbuttons	= FALSE;
+int swapscrollbuttons   = FALSE;
 
 /*
  *  bartflag triggers quote unquote experimental
@@ -45,7 +46,7 @@ int	swapscrollbuttons	= FALSE;
  *  comes highly suggested.
  */
 
-int bartflag			= FALSE;
+int bartflag            = FALSE;
 
 /*
  *  colors-constants. now let me take a minute to explain

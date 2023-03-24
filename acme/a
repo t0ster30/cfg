@@ -5,16 +5,22 @@ importas u USER
 importas r roff
 
 define plan9 /usr/local/p9p
-define shell ${plan9}/bin/rc
+define SHELL ${plan9}/bin/rc
 define PAGER nobs
 define TERM dumb
-define -s manpath /usr/local/p9p/man:/usr/local/share/man:/usr/share/man:${h}/man
+define -s manpath ${plan9}/man:/usr/local/share/man:/usr/share/man:${h}/man
 define acmeshell ${shell}
 
 #if { $1 = -n } { define NAMESPACE=/tmp/ns.$u.$2 mkdir -p $NAMESPACE }
 
-# needs thorough checking
-ifelse -n { pgrep fonsrv } { background { fontsrv } } {
-ifelse -n { pgrep acme } { background { 9 acme } }
-{ ifelse -n { pgrep plumber } { background { plumber } }
-pipeline { cat ${h}/lib/plumbing } 9p write plumb/rules } }
+foreground {
+ if -n { pgrep fontsrv }
+ background { fontsrv }
+}
+
+foreground {
+ if -n { pgrep plumber }
+ background { plumber }
+}
+
+if -n { pgrep acme } background { 9 acme }
