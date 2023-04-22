@@ -1,15 +1,23 @@
-/** userContent.css
-***************************/
-/* Fullscreen video warning. IMPORTANT: if used directly in
-userChrome.css, it must be placed above the namespace line. */
+/* userContent.css
+   Fullscreen video warning. IMPORTANT: if used directly in
+   userChrome.css, it must be placed above the namespace line. */
 @-moz-document url(chrome://browser/content/browser.xul) {
 #fullscreen-warning{display: none !important;}}
-/* @media (prefers-color-scheme: light) { :root { */
-/* --main-bg-color: rgb(249, 249, 249); */
-/* --private-bg-color: rgb(185, 122, 255); */
-/* }} */
-@-moz-document url-prefix("about:reader"){
-body.sepia{color: #000000 !important;background-color: #E9E9E8 !important;}a,a:link{text-decoration:none;color:none;transition-property:background;transition-duration:.15s}a:link:hover{color:none;background:#eccece;border-radius:4px}}}
+
+/*@-moz-document url-prefix("about:reader"){
+	body.sepia{color:black !important;background-color:#eeeeee !important;}
+	.moz-reader-content a:link{
+		text-decoration:1px solid rgba(0,0,0,0);
+		transition-duration:.3s;
+		color:#933
+	}
+	.moz-reader-content a:link:visited{color:#809}
+	.mod-reader-content a:link:hover{
+		transition:none;
+		text-decoration-color:inherit
+	}
+}*/
+
 /** Error Page - Restore illustrations ****************************************/
 @-moz-document url-prefix("about:neterror"),
   url("about:restartrequired"), url("chrome://browser/content/aboutRestartRequired.xhtml"),

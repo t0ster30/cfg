@@ -24,5 +24,5 @@ user_pref("browser.theme.retainedExpiredThemes", "[\"elemental-soft-colorway@moz
 user_pref("network.standard-url.escape-utf8", false);
 user_pref("browser.theme.toolbar-theme", 1);
 user_pref("browser.urlbar.decodeURLsOnCopy", true);
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
 /*user_pref("ui.osk.enabled", false);*/
-/*user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);*/

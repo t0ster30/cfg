@@ -20,7 +20,7 @@ alias h="cd $h"
 alias j=pushd
 alias get='curl -O'
 alias gz=gzip
-alias mpv='mpv --really-quiet --input-ipc-server=/tmp/mpv.sock'
+alias mpv='mpv --ao=sndio,pulse,alsa --really-quiet --input-ipc-server=/tmp/mpv.sock'
 alias mv='mv -iv'
 alias nq='nq -c'
 #alias o=xdg-open
@@ -42,7 +42,7 @@ alias icat='kitty +kitten icat --align=left'
 #alias gp='fd -t f | fzf | wl-copy -n'
 alias 2th="2th $h/.local/share/events"
 alias bar='kitty @ launch --type=os-window --keep-focus termbar && kitty @ resize-os-window --match title:termbar --width 15 --height 2'
-alias cava='kitty @ launch --keep-focus --type=os-window --os-window-title=cava cava && kitty @ resize-os-window --match cmdline:cava --width 52 --height 16'
+#alias cava='kitty @ launch --keep-focus --type=os-window --os-window-title=cava cava && kitty @ resize-os-window --match cmdline:cava --width 52 --height 16'
 alias wlclock="wlclock --no-input --layer=top --position=bottom-right --background-colour=#e9e9e8 --border-size 2 --border-colour=#464646 &"
 alias hn="history | tail -n $1"
 alias ping="prettyping"

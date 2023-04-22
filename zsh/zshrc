@@ -82,7 +82,7 @@ source $XDG_CONFIG_HOME/zsh/plug/fsyh/F-Sy-H.plugin.zsh
 # }
 
 # pk tar file\dir
-pk () {
+pk() {
  if [ $1 ] ; then
  case $1 in
  tar)   tar cpf $2.tar $2              ;;
@@ -104,7 +104,7 @@ pk () {
  fi
 }
 # x file
-x () {
+x() {
  if [ -f $1 ] ; then
  case $1 in
  *.tar.bz2)   tar -Ipbzip2 -xf $1  ;;
@@ -112,6 +112,8 @@ x () {
  *.tbz)       tar -Ipbzip2 -xf $1  ;;
  *.tar.xz)    tar -I 'xz -9 -T0' -xf $1 ;;
  *.txz)       tar -I 'xz -9 -T0' -xf $1 ;;
+ *.tar.lz)    tar -I 'lzip -d' -xf $1 ;;
+ *.tlz)       tar -I 'lzip -d' -xf $1 ;;
  *.tar.zst)   tar -Iunzstd -xf $1    ;;
  *.tar.gz)    tar -Ipigz -xf $1    ;;
  *.tgz)       tar -Ipigz -xf $1    ;;
@@ -128,9 +130,9 @@ x () {
  echo "'$1' is not a valid file"
  fi
 }
-= () {noglob zcalc -f -e "$*"}
-up () {DEEP=$1; for i in $(seq 1 ${DEEP:-"1"}); do cd ../; done;}
-n () {
+#= () {noglob zcalc -f -e "$*"}
+up() {DEEP=$1; for i in $(seq 1 ${DEEP:-"1"}); do cd ../; done;}
+n() {
     # Block nesting of nnn in subshells
     if [ -n $NNNLVL ] && [ "${NNNLVL:-0}" -ge 1 ]; then
         echo "nnn is already running"
@@ -156,18 +158,19 @@ n () {
             rm -f "$NNN_TMPFILE" > /dev/null
     fi
 }
-lmv () {
+lmv() {
 	_path$(dirname -- "$1")
 	_target="${_path%/}/$2"
 	mv -- "$1" "$_target"
 }
-abiword () {
+abiword() {
 	flatpak run --branch=stable --arch=x86_64 \
 	--command=abiword --file-forwarding \
 	com.abisource.AbiWord $@
 }
-cm () {
+cm() {
 	mkdir $1 &&	cd $1
 }
-f () {pushd +"$(dirs -v | fzy | cut -f1)"}
-gitc (){git commit -am "$@"}
+f(){pushd +"$(dirs -v | fzy | cut -f1)"}
+gitc(){git commit -am "$@"}
+imv(){imv-wayland "$@"}
